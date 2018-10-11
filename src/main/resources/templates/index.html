@@ -11,16 +11,9 @@
 <!--transactionId = fd3c56b2-ffbe-459e-9185-2af8671c51da-->
 
 <form id="sendForm" th:action="${authorisationUrl}" method="POST">
-    <!--<p>-->
-        <!--<input type="hidden" name="transactionId" th:value="${transactionId}"/>-->
-    <!--</p>-->
-
-    <table>
-        <tr>
-            <td>transactionId:</td>
-            <td><input type="text" name="transactionId" th:value="${transactionId}"/></td>
-        </tr>
-    </table>
+    <p>
+        <input type="hidden" name="transactionId" th:value="${transactionId}"/>
+    </p>
 </form>
 <script>
     document.getElementById('sendForm').submit();

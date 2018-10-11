@@ -17,8 +17,9 @@ public class SendRequestMessage {
 
     private RestTemplate restTemplate = new RestTemplate(SSLClientFactory.getClientHttpRequestFactory(SSLClientFactory.HttpClientType.HttpClient));
 
+    private static final String URL = "https://localhost:9000/api/processing/process";
+
     public void send() {
-        String url = "https://localhost:9000/api/processing/process";
         String xmlString =
                 "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
                 "<body>" +
@@ -33,6 +34,15 @@ public class SendRequestMessage {
         headers.setContentType(MediaType.TEXT_HTML);
         HttpEntity<String> request = new HttpEntity<>(xmlString, headers);
 
-        ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(URL, request, String.class);
+    }
+
+    public String send1() {
+        String value = "transactionId=e87ba625-32dd-4850-b7a9-78d2017375c1";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        HttpEntity<String> httpEntity = new HttpEntity<>(value, headers);
+        ResponseEntity<String> response = restTemplate.postForEntity(URL, httpEntity, String.class);
+        return response.getBody();
     }
 }

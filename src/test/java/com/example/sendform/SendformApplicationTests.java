@@ -16,7 +16,7 @@ public class SendformApplicationTests {
 
 	@Test
 	public void contextLoads() {
-		sendRequestMessage.send();
+		sendRequestMessage.send1();
 	}
 
 }
