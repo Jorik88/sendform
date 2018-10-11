@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Bepaid Money Payment</title>
+</head>
+<body>
+
+<!--В параметры динамически подставляются значения-->
+<!--authorisationUrl = https://93.125.98.117:443/api/processing/process-->
+<!--transactionId = fd3c56b2-ffbe-459e-9185-2af8671c51da-->
+
+<form id="sendForm" th:action="${authorisationUrl}" method="POST">
+    <!--<p>-->
+        <!--<input type="hidden" name="transactionId" th:value="${transactionId}"/>-->
+    <!--</p>-->
+
+    <table>
+        <tr>
+            <td>transactionId:</td>
+            <td><input type="text" name="transactionId" th:value="${transactionId}"/></td>
+        </tr>
+    </table>
+</form>
+<script>
+    document.getElementById('sendForm').submit();
+</script>
+
+</body>
+</html>
