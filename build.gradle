@@ -21,6 +21,9 @@ sourceCompatibility = 1.8
 
 repositories {
 	mavenCentral()
+	maven {
+		url "https://dl.bintray.com/stokito/maven"
+	}
 }
 
 
@@ -29,6 +32,8 @@ dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-web')
 	compile('org.apache.httpcomponents:httpclient:4.5.5')
 	compile (group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.9.0')
+	compile('com.liqpay:liqpay-sdk:0.6')
+	compile('org.bouncycastle:bcpkix-jdk15on:1.59')
 	compileOnly('org.springframework.boot:spring-boot-configuration-processor')
 	compileOnly('org.projectlombok:lombok')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')

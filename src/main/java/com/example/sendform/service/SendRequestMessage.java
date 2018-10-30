@@ -1,9 +1,6 @@
 package com.example.sendform.service;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Service;
@@ -18,6 +15,8 @@ public class SendRequestMessage {
     private RestTemplate restTemplate = new RestTemplate(SSLClientFactory.getClientHttpRequestFactory(SSLClientFactory.HttpClientType.HttpClient));
 
     private static final String URL = "https://localhost:9000/api/processing/process";
+    private static final String TRANSACTION_ID = "7f7713ef-2a92-4739-b5d4-fc260042b02f";
+    private static final String REDIRECT_URL= "https://localhost:9000//api/processing/status";
 
     public void send() {
         String xmlString =
@@ -38,11 +37,22 @@ public class SendRequestMessage {
     }
 
     public String send1() {
-        String value = "transactionId=e87ba625-32dd-4850-b7a9-78d2017375c1";
+        String value = "transactionId=" + TRANSACTION_ID;
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         HttpEntity<String> httpEntity = new HttpEntity<>(value, headers);
-        ResponseEntity<String> response = restTemplate.postForEntity(URL, httpEntity, String.class);
+//        ResponseEntity<String> response = restTemplate.postForEntity(URL, httpEntity, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, httpEntity, String.class);
+        return response.getBody();
+    }
+
+    public String sendAndRedirect() {
+        String value = "transactionId=" + TRANSACTION_ID;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        HttpEntity<String> httpEntity = new HttpEntity<>(value, headers);
+//        ResponseEntity<String> response = restTemplate.postForEntity(URL, httpEntity, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(REDIRECT_URL, HttpMethod.GET, httpEntity, String.class);
         return response.getBody();
     }
 }
