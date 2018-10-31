@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
@@ -20,9 +22,9 @@ public class SendController {
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @GetMapping(value = "/send")
-    public String sendForm(Model model) {
+    public String sendForm(@RequestParam String transactionId, Model model) {
         model.addAttribute("authorisationUrl", AUTHORISATION_URL);
-        model.addAttribute("transactionId", TRANSACTION_ID);
+        model.addAttribute("transactionId", transactionId);
         return "index";
     }
 

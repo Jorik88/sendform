@@ -44,7 +44,7 @@ public class SendRequestMessage {
         HttpEntity<String> httpEntity = new HttpEntity<>(value, headers);
         HttpEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, httpEntity, String.class);
         HttpHeaders responseHeaders = response.getHeaders();
-        String set_cookie = responseHeaders.getFirst(HttpHeaders.SET_COOKIE);
+        String set_cookie = responseHeaders.getFirst(HttpHeaders.COOKIE);
         System.out.println(set_cookie);
         return set_cookie;
     }
@@ -54,9 +54,9 @@ public class SendRequestMessage {
         HttpHeaders headers = new HttpHeaders();
 //        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         headers.add("Cookie", cookie);
-        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + OAUTH_TOKEN);
+        headers.add(HttpHeaders.AUTHORIZATION, "Bearer" + OAUTH_TOKEN);
         HttpEntity httpEntity = new HttpEntity<>(null, headers);
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
         String rss = response.getBody();
         System.out.println(response);
         return rss;
