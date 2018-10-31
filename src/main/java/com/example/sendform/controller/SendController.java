@@ -13,7 +13,7 @@ import java.io.IOException;
 @Controller
 public class SendController {
 
-    private static final String TRANSACTION_ID = "fa4c32ea-61cd-4827-a9d9-69f49588421a";
+    private static final String TRANSACTION_ID = "bbb83cbb-5c9f-4150-b1d0-3f0cb1ed659c";
     private static final String AUTHORISATION_URL = "https://localhost:9000/api/processing/process";
     private static final String PUBLIC_KEY = "i77403547665";
     private static final String PRIVATE_KEY = "GmKnyfLQ8jOWe2TZZi2oXMF63NWeaEicUxIsA3Az";

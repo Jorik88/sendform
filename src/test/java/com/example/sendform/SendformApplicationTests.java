@@ -16,8 +16,8 @@ public class SendformApplicationTests {
 
 	@Test
 	public void contextLoads() {
-		sendRequestMessage.send1();
-		sendRequestMessage.sendAndRedirect();
+		String cookie = sendRequestMessage.send1();
+		sendRequestMessage.sendAndRedirect("JSESSIONID=A976EA8AD459AFCDFB7864188E59E93E;");
 	}
 
 }

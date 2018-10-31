@@ -15,8 +15,9 @@ public class SendRequestMessage {
     private RestTemplate restTemplate = new RestTemplate(SSLClientFactory.getClientHttpRequestFactory(SSLClientFactory.HttpClientType.HttpClient));
 
     private static final String URL = "https://localhost:9000/api/processing/process";
-    private static final String TRANSACTION_ID = "7f7713ef-2a92-4739-b5d4-fc260042b02f";
-    private static final String REDIRECT_URL= "https://localhost:9000//api/processing/status";
+    private static final String TRANSACTION_ID = "b4dfb586-bacd-4e08-94a5-164cdf657f57";
+    private static final String REDIRECT_URL= "https://localhost:9000/api/processing/status";
+    private static final String OAUTH_TOKEN = "964932d6-d615-40ae-96f2-7eb2cede12ff";
 
     public void send() {
         String xmlString =
@@ -41,18 +42,23 @@ public class SendRequestMessage {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         HttpEntity<String> httpEntity = new HttpEntity<>(value, headers);
-//        ResponseEntity<String> response = restTemplate.postForEntity(URL, httpEntity, String.class);
-        ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, httpEntity, String.class);
-        return response.getBody();
+        HttpEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, httpEntity, String.class);
+        HttpHeaders responseHeaders = response.getHeaders();
+        String set_cookie = responseHeaders.getFirst(HttpHeaders.SET_COOKIE);
+        System.out.println(set_cookie);
+        return set_cookie;
     }
 
-    public String sendAndRedirect() {
-        String value = "transactionId=" + TRANSACTION_ID;
+    public String sendAndRedirect(String cookie) {
+        String url = REDIRECT_URL + "?transactionId=" + TRANSACTION_ID;
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        HttpEntity<String> httpEntity = new HttpEntity<>(value, headers);
-//        ResponseEntity<String> response = restTemplate.postForEntity(URL, httpEntity, String.class);
-        ResponseEntity<String> response = restTemplate.exchange(REDIRECT_URL, HttpMethod.GET, httpEntity, String.class);
-        return response.getBody();
+//        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.add("Cookie", cookie);
+        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + OAUTH_TOKEN);
+        HttpEntity httpEntity = new HttpEntity<>(null, headers);
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+        String rss = response.getBody();
+        System.out.println(response);
+        return rss;
     }
 }
