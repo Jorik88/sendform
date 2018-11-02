@@ -1,16 +1,15 @@
 package com.example.sendform.controller;
 
+import com.example.sendform.service.LiqPayService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 
 @Controller
 public class SendController {
@@ -20,6 +19,10 @@ public class SendController {
     private static final String PUBLIC_KEY = "i77403547665";
     private static final String PRIVATE_KEY = "GmKnyfLQ8jOWe2TZZi2oXMF63NWeaEicUxIsA3Az";
     private ObjectMapper objectMapper = new ObjectMapper();
+
+
+    @Autowired
+    private LiqPayService service;
 
     @GetMapping(value = "/send")
     public String sendForm(@RequestParam String transactionId, Model model) {
@@ -34,9 +37,16 @@ public class SendController {
         return"liqpay";
     }
 
-    @PostMapping(value = "/api/input/payment/{paymentSystem}")
-    public ResponseEntity handlePaymentResponse(@PathVariable String paymentSystem, HttpServletRequest request) throws IOException {
-        System.out.println(request);
+    @GetMapping(value = "/api/input/payment/LiqPay/{userId}")
+    public ResponseEntity handlePaymentResponse(@PathVariable String userId, HttpServletRequest request) {
+//        System.out.println(request);
+//        service.m1(request);
+        System.out.println("hello");
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "/input")
+    public String inputForm() {
+        return "bepaidINPUT";
     }
 }

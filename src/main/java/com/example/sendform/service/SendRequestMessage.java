@@ -5,7 +5,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
+import org.thymeleaf.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +15,7 @@ public class SendRequestMessage {
     private RestTemplate restTemplate = new RestTemplate(SSLClientFactory.getClientHttpRequestFactory(SSLClientFactory.HttpClientType.HttpClient));
 
     private static final String URL = "https://localhost:9000/api/processing/process";
-    private static final String TRANSACTION_ID = "b4dfb586-bacd-4e08-94a5-164cdf657f57";
+    private static final String TRANSACTION_ID = "2f92a24e-5439-44b5-a839-fea5791d6e6a";
     private static final String REDIRECT_URL= "https://localhost:9000/api/processing/status";
     private static final String OAUTH_TOKEN = "964932d6-d615-40ae-96f2-7eb2cede12ff";
 
@@ -37,28 +37,46 @@ public class SendRequestMessage {
         ResponseEntity<String> response = restTemplate.postForEntity(URL, request, String.class);
     }
 
-    public String send1() {
+    public List<String> send1() {
         String value = "transactionId=" + TRANSACTION_ID;
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         HttpEntity<String> httpEntity = new HttpEntity<>(value, headers);
         HttpEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, httpEntity, String.class);
         HttpHeaders responseHeaders = response.getHeaders();
-        String set_cookie = responseHeaders.getFirst(HttpHeaders.COOKIE);
-        System.out.println(set_cookie);
-        return set_cookie;
+        List<String> strings = responseHeaders.get(HttpHeaders.SET_COOKIE);
+        System.out.println(strings);
+        return strings;
     }
 
-    public String sendAndRedirect(String cookie) {
+    public String sendAndRedirect(List<String> cookies) {
         String url = REDIRECT_URL + "?transactionId=" + TRANSACTION_ID;
         HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        headers.add("Cookie", cookie);
-        headers.add(HttpHeaders.AUTHORIZATION, "Bearer" + OAUTH_TOKEN);
+        cookies.forEach(cookie -> headers.add("Cookie", StringUtils.substringBefore(cookie, ";")));
         HttpEntity httpEntity = new HttpEntity<>(null, headers);
+        System.out.println(httpEntity.getHeaders().get(HttpHeaders.SET_COOKIE));
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
         String rss = response.getBody();
         System.out.println(response);
         return rss;
+    }
+
+    public String sendAndRedirect2(List<String> cookies) {
+        String value = "transactionId=" + TRANSACTION_ID;
+        HttpHeaders headers = new HttpHeaders();
+        cookies.forEach(cookie -> headers.add("Cookie", cookie));
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        HttpEntity httpEntity = new HttpEntity<>(value, headers);
+        System.out.println(httpEntity.getHeaders().get(HttpHeaders.SET_COOKIE));
+        ResponseEntity<String> response = restTemplate.exchange(REDIRECT_URL, HttpMethod.POST, httpEntity, String.class);
+        String rss = response.getBody();
+        System.out.println(response);
+        return rss;
+    }
+
+    public void stackExchange() {
+        String url = "https://api.stackexchange.com/docs/sites#page=1&pagesize=8&filter=default&run=true";
+        HttpEntity<String> exchange = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
+        System.out.println(exchange);
     }
 }
