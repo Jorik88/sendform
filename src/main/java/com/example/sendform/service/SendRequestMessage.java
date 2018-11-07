@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.thymeleaf.util.StringUtils;
 
 import java.util.List;
 
@@ -33,9 +34,9 @@ public class SendRequestMessage {
     public String sendAndRedirect(List<String> cookies) {
         String url = REDIRECT_URL + "?transactionId=" + TRANSACTION_ID;
         HttpHeaders headers = new HttpHeaders();
-        cookies.forEach(cookie -> headers.add(HttpHeaders.SET_COOKIE, cookie));
+        cookies.forEach(cookie -> headers.set(HttpHeaders.COOKIE, StringUtils.substringBefore(cookie, ";")));
         HttpEntity httpEntity = new HttpEntity<>(null, headers);
-        log.warn("List of cookies={}", httpEntity.getHeaders().get(HttpHeaders.SET_COOKIE));
+        log.warn("List of cookies={}", httpEntity.getHeaders().get(HttpHeaders.COOKIE));
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
         String rss = response.getBody();
         log.warn("Response={}", response);
@@ -45,7 +46,7 @@ public class SendRequestMessage {
     public String sendAndRedirect2(List<String> cookies) {
         String value = "transactionId=" + TRANSACTION_ID;
         HttpHeaders headers = new HttpHeaders();
-        cookies.forEach(cookie -> headers.add(HttpHeaders.SET_COOKIE, cookie));
+        cookies.forEach(cookie -> headers.set(HttpHeaders.COOKIE, StringUtils.substringBefore(cookie, ";")));
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         HttpEntity httpEntity = new HttpEntity<>(value, headers);
         log.warn("List of cookies={}", httpEntity.getHeaders().get(HttpHeaders.SET_COOKIE));
