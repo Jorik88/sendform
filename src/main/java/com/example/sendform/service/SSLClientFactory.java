@@ -39,7 +39,7 @@ public abstract class SSLClientFactory {
         switch (httpClientType) {
 
             case HttpClient:
-                closeableClientBuilder = HttpClientBuilder.create();
+                closeableClientBuilder = HttpClientBuilder.create().disableRedirectHandling();
                 closeableClientBuilder.setSSLContext(getSSlContext());
                 closeableClientBuilder.setSSLHostnameVerifier(gethostnameVerifier());
                 requestFactory = new HttpComponentsClientHttpRequestFactory(closeableClientBuilder.build());

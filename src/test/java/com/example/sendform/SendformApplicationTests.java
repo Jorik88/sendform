@@ -10,7 +10,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
@@ -27,7 +26,8 @@ public class SendformApplicationTests {
 	@Test
 	public void contextLoads() {
 		List<String> cookies = sendRequestMessage.send1();
-		sendRequestMessage.sendAndRedirect2(cookies);
+		String resp = sendRequestMessage.sendAndRedirect(cookies);
+		System.out.println(resp);
 	}
 
 	@Test

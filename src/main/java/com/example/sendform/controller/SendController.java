@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class SendController {
 
-    private static final String TRANSACTION_ID = "bbb83cbb-5c9f-4150-b1d0-3f0cb1ed659c";
+    private static final String TRANSACTION_ID = "1ba18cd3-f064-4dfa-b62b-47a93833fc74";
     private static final String AUTHORISATION_URL = "https://localhost:9000/api/processing/process";
     private static final String PUBLIC_KEY = "i77403547665";
     private static final String PRIVATE_KEY = "GmKnyfLQ8jOWe2TZZi2oXMF63NWeaEicUxIsA3Az";
