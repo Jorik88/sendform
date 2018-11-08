@@ -1,7 +1,9 @@
 package com.example.sendform.service;
 
+import com.example.sendform.configuration.BepaidConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -14,8 +16,11 @@ public class SendRequestMessage {
     private RestTemplate restTemplate = new RestTemplate(SSLClientFactory.getClientHttpRequestFactory(SSLClientFactory.HttpClientType.HttpClient));
 
     private static final String URL = "https://localhost:9000/api/processing/process";
-    private static final String TRANSACTION_ID = "7b46560c-fa5e-4943-87fc-1cbec1f53352";
+    private static final String TRANSACTION_ID = "c86de2bb-d68c-4004-8304-5982304162cd";
     private static final String REDIRECT_URL = "https://localhost:9000/api/processing/status";
+
+    @Autowired
+    private BepaidConfiguration bepaidConfiguration;
 
     public List<String> send1() {
         String value = "transactionId=" + TRANSACTION_ID;
@@ -35,12 +40,26 @@ public class SendRequestMessage {
         cookies.forEach(cookie -> headers.add(HttpHeaders.COOKIE, StringUtils.substringBefore(cookie, ";")));
         HttpEntity httpEntity = new HttpEntity<>(null, headers);
         ResponseEntity<String> response;
+        int attemptCount = 0;
         try{
-            do {
+            while (true) {
+                attemptCount++;
                 response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
-            } while (!response.getStatusCode().equals(HttpStatus.SEE_OTHER));
+                if(response.getStatusCode().equals(HttpStatus.SEE_OTHER)){
+                    break;
+                }else if (attemptCount > bepaidConfiguration.getAttemptCount()){
+                    log.warn("Attempt count limit, count is={}", attemptCount);
+                    throw new IllegalArgumentException("Attempt count limit, count is " + attemptCount);
+                }else {
+                    Thread.sleep(2000);
+                }
+            }
             HttpHeaders responseHeaders = response.getHeaders();
             List<String> location = responseHeaders.get("Location");
+            if (location == null || location.isEmpty()) {
+                log.warn("Header Location not found or not contain data");
+                throw new IllegalArgumentException("Header Location not found or not contain data");
+            }
             log.warn("Response={}", response.getHeaders().toString() + response.getStatusCode());
             return StringUtils.substringAfterLast(location.get(0), "&");
         }catch (Exception e) {

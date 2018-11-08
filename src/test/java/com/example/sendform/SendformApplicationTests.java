@@ -1,5 +1,6 @@
 package com.example.sendform;
 
+import com.example.sendform.configuration.BepaidConfiguration;
 import com.example.sendform.model.LiqPayPaymentResponse;
 import com.example.sendform.service.SendRequestMessage;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -20,6 +21,9 @@ public class SendformApplicationTests {
 
 	@Autowired
 	private SendRequestMessage sendRequestMessage;
+
+	@Autowired
+	private BepaidConfiguration bepaidConfiguration;
 
 	private ObjectMapper objectMapper = new ObjectMapper();
 
@@ -49,5 +53,10 @@ public class SendformApplicationTests {
 		String forReplace = "JSESSIONID=205C2AF6657387F8565E724A0BFCD1DF; Path=/api/; HttpOnly";
 		String result = StringUtils.substringBefore(forReplace, ";");
 		System.out.println(result);
+	}
+
+	@Test
+	public void testM() {
+		System.out.println(bepaidConfiguration.getAttemptCount());
 	}
 }
