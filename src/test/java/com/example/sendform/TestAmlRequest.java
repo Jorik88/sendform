@@ -23,5 +23,6 @@ public class TestAmlRequest {
     @Test
     public void testSend() throws IOException, SAXException, ParserConfigurationException, TransformerException {
         service.refactor();
+//        service.m1();
     }
 }

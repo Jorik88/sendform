@@ -2,6 +2,10 @@ package com.example.sendform.service;
 
 import com.sun.org.apache.xml.internal.serialize.OutputFormat;
 import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -28,7 +32,7 @@ import java.io.StringWriter;
 @Service
 public class RefactorXmlFileService {
 
-    private RestTemplate restTemplate = new RestTemplate(SSLClientFactory.getClientHttpRequestFactory(SSLClientFactory.HttpClientType.HttpClient));
+    private RestTemplate restTemplate = new RestTemplate();
     private static final String URL = "http://localhost:9000/itwGateWS/exec/FISPut";
 
 
@@ -81,6 +85,39 @@ public class RefactorXmlFileService {
         DOMSource source = new DOMSource(doc);
         StreamResult result = new StreamResult(new File("src/main/resources/templates/aml1.xml"));
         transformer.transform(source, result);
+    }
+
+    public void m1() throws IOException, ParserConfigurationException, SAXException {
+
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+        Document doc = docBuilder.parse("src/main/resources/templates/aml.xml");
+
+        Node item = doc.getElementsByTagName("parameters").item(0);
+        Element element = (Element) item;
+
+        setContent(doc, element);
+        doc.setXmlStandalone(true);
+
+        OutputFormat format    = new OutputFormat(doc);
+        format.setEncoding("windows-1251");
+        // as a String
+        StringWriter stringOut = new StringWriter();
+        XMLSerializer serial   = new XMLSerializer(stringOut, format);
+        serial.serialize(doc);
+        OkHttpClient client = new OkHttpClient();
+
+        okhttp3.MediaType mediaType = okhttp3.MediaType.parse("text/xml");
+        RequestBody body = RequestBody.create(mediaType, stringOut.toString());
+        Request request = new Request.Builder()
+                .url("http://localhost:9000/itwGateWS/exec/FISPut")
+                .post(body)
+                .addHeader("content-type", "text/xml")
+                .build();
+
+        Response response = client.newCall(request).execute();
+
+        System.out.println(response);
     }
 
 }
