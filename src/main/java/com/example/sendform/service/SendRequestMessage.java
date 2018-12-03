@@ -16,7 +16,7 @@ public class SendRequestMessage {
     private RestTemplate restTemplate = new RestTemplate(SSLClientFactory.getClientHttpRequestFactory(SSLClientFactory.HttpClientType.HttpClient));
 
     private static final String URL = "https://localhost:9000/api/processing/process";
-    private static final String TRANSACTION_ID = "c86de2bb-d68c-4004-8304-5982304162cd";
+    private static final String TRANSACTION_ID = "a7e01361-9163-4b67-953e-73983fc87f47";
     private static final String REDIRECT_URL = "https://localhost:9000/api/processing/status";
 
     @Autowired

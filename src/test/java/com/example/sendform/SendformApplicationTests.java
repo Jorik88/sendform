@@ -54,9 +54,4 @@ public class SendformApplicationTests {
 		String result = StringUtils.substringBefore(forReplace, ";");
 		System.out.println(result);
 	}
-
-	@Test
-	public void testM() {
-		System.out.println(bepaidConfiguration.getAttemptCount());
-	}
 }

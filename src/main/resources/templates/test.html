@@ -1,0 +1,91 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+    <!--<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>-->
+    <!--<title>Bepaid Money Payment</title>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--&lt;!&ndash;В параметры динамически подставляются значения&ndash;&gt;-->
+<!--&lt;!&ndash;authorisationUrl = https://93.125.98.117:443/api/processing/process&ndash;&gt;-->
+<!--&lt;!&ndash;transactionId = fd3c56b2-ffbe-459e-9185-2af8671c51da&ndash;&gt;-->
+
+<!--<form id="sendForm" action="/api/processing/status" method="POST">-->
+    <!--<p>-->
+        <!--<input type="hidden" name="transactionId" th:value="${transactionId}"/>-->
+    <!--</p>-->
+<!--</form>-->
+<!--<script>-->
+    <!--document.getElementById('sendForm').submit();-->
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<FISRs>
+    <Msg>
+        <Response Scheme="CRB" RsId="CRB/FindSuspiciousRs" System="Forpost">
+            <Response>
+                <ReturnCode>-9</ReturnCode>
+                <Description>
+                    <Row num="1">
+                        <item>TEST</item>
+                        <value>Иванов иван иванович</value>
+                        <message>test</message>
+                        <suspect>[DOWJONES 270692]</suspect>
+                        <spc_reason>DOWJONES</spc_reason>
+                        <full_suspect>[DOWJONES 270692] IVAN IVANOV</full_suspect>
+                    </Row>
+                    <Row num="2">
+                        <item>TEST</item>
+                        <value>Иванов иван иванович</value>
+                        <message>test</message>
+                        <suspect>[DOWJONES 270693]</suspect>
+                        <spc_reason>DOWJONES</spc_reason>
+                        <full_suspect>[DOWJONES 270693] IVAN IVANOV</full_suspect>
+                    </Row>
+                    <Row num="3">
+                        <item>TEST</item>
+                        <value>Иванов иван иванович</value>
+                        <message>test</message>
+                        <suspect>[DOWJONES 270696]</suspect>
+                        <spc_reason>DOWJONES</spc_reason>
+                        <full_suspect>[DOWJONES 270696] IVAN IVANOV</full_suspect>
+                    </Row>
+                    <Row num="4">
+                        <item>TEST</item>
+                        <value>Иванов иван иванович</value>
+                        <message>test</message>
+                        <suspect>[DOWJONES 944961]</suspect>
+                        <spc_reason>DOWJONES</spc_reason>
+                        <full_suspect>[DOWJONES 944961] IVAN IVANOV</full_suspect>
+                    </Row>
+                    <Row num="5">
+                        <item>TEST</item>
+                        <value>Иванов иван иванович</value>
+                        <message>test</message>
+                        <suspect>[DOWJONES 1112727]</suspect>
+                        <spc_reason>DOWJONES</spc_reason>
+                        <full_suspect>[DOWJONES 1112727] IVAN IVANOV</full_suspect>
+                    </Row>
+                    <Row num="6">
+                        <item>TEST</item>
+                        <value>Иванов иван иванович</value>
+                        <message>test</message>
+                        <suspect>[DOWJONES 1369503]</suspect>
+                        <spc_reason>DOWJONES</spc_reason>
+                        <full_suspect>[DOWJONES 1369503] IVAN IVANOV</full_suspect>
+                    </Row>
+                    <Row num="7">
+                        <item>TEST</item>
+                        <value>Иванов иван иванович</value>
+                        <message>test</message>
+                        <suspect>[DOWJONES 3113752]</suspect>
+                        <spc_reason>DOWJONES</spc_reason>
+                        <full_suspect>[DOWJONES 3113752] IVAN IVANOV</full_suspect>
+                    </Row>
+                </Description>
+            </Response>
+        </Response>
+    </Msg>
+</FISRs>
