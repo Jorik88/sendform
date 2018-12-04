@@ -1,5 +1,6 @@
 package com.example.sendform.service;
 
+import com.example.sendform.model.AmlCheckData;
 import com.sun.org.apache.xml.internal.serialize.OutputFormat;
 import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 import okhttp3.OkHttpClient;
@@ -15,8 +16,9 @@ import org.springframework.web.client.RestTemplate;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -27,6 +29,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
 import java.io.StringWriter;
 
 @Service
@@ -68,13 +71,13 @@ public class RefactorXmlFileService {
 
     private void setContent(Document doc, Element element) {
         Element pTest = doc.createElement("p");
-        pTest.setAttribute("name", "test");
-        pTest.appendChild(doc.createTextNode("Иванов иван иванович"));
+        pTest.setAttribute("name", "people_full_name");
+        pTest.appendChild(doc.createTextNode("Иванов иван"));
         element.appendChild(pTest);
 
         Element pMessage = doc.createElement("p");
-        pMessage.setAttribute("name", "message");
-        pMessage.appendChild(doc.createTextNode("test"));
+        pMessage.setAttribute("name", "person_address");
+        pMessage.appendChild(doc.createTextNode("UNITED STATES, PATERSON, RAILWAY AVENUE, 345 E"));
         element.appendChild(pMessage);
     }
 
@@ -117,7 +120,32 @@ public class RefactorXmlFileService {
 
         Response response = client.newCall(request).execute();
 
+        parseResponse(response.body().string());
         System.out.println(response);
     }
 
+    public void parseResponse(String responseString) throws ParserConfigurationException, IOException, SAXException {
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+        Document doc = docBuilder.parse(new InputSource(new StringReader(responseString)));
+
+        NodeList childNodes = doc.getElementsByTagName("Description").item(0).getChildNodes();
+        NodeList nodes = ((Node) childNodes).getChildNodes();
+
+        AmlCheckData amlCheckData = new AmlCheckData();
+        int bound = nodes.getLength();
+        for (int i = 0; i < bound; i++) {
+            if ("PEOPLE_FULL_NAME".equals(nodes.item(i).getFirstChild().getTextContent())) {
+                String textContent = nodes.item(i).getLastChild().getTextContent();
+                amlCheckData.getFullNameData().add(textContent);
+            } else if ("PERSON_ADDRESS".equals(nodes.item(i).getFirstChild().getTextContent())) {
+                String textContent = nodes.item(i).getLastChild().getTextContent();
+                amlCheckData.getAddressData().add(textContent);
+            }
+        }
+
+        amlCheckData.getFullNameData().forEach(System.out::println);
+        amlCheckData.getAddressData().forEach(System.out::println);
+    }
 }

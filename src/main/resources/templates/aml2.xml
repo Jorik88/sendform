@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="WINDOWS-1251"?>
+<FISRs>
+    <Msg>
+        <Response Scheme="CRB" RsId="CRB/FindSuspiciousRs" System="Forpost">
+            <Response>
+                <ReturnCode>-9</ReturnCode>
+                <Description>
+                    <Row num="1">
+                        <item>TEST</item>
+                        <value>Иванов иван иванович</value>
+                        <message>test</message>
+                        <suspect>[DOWJONES 270692]</suspect>
+                        <spc_reason>DOWJONES</spc_reason>
+                        <full_suspect>[DOWJONES 270692] IVAN IVANOV</full_suspect>
+                    </Row>
+                    <Row num="2">
+                        <item>TEST</item>
+                        <value>Иванов иван иванович</value>
+                        <message>test</message>
+                        <suspect>[DOWJONES 270693]</suspect>
+                        <spc_reason>DOWJONES</spc_reason>
+                        <full_suspect>[DOWJONES 270693] IVAN IVANOV</full_suspect>
+                    </Row>
+                    <Row num="3">
+                        <item>TEST</item>
+                        <value>Иванов иван иванович</value>
+                        <message>test</message>
+                        <suspect>[DOWJONES 270696]</suspect>
+                        <spc_reason>DOWJONES</spc_reason>
+                        <full_suspect>[DOWJONES 270696] IVAN IVANOV</full_suspect>
+                    </Row>
+                    <Row num="4">
+                        <item>TEST</item>
+                        <value>Иванов иван иванович</value>
+                        <message>test</message>
+                        <suspect>[DOWJONES 944961]</suspect>
+                        <spc_reason>DOWJONES</spc_reason>
+                        <full_suspect>[DOWJONES 944961] IVAN IVANOV</full_suspect>
+                    </Row>
+                    <Row num="5">
+                        <item>TEST</item>
+                        <value>Иванов иван иванович</value>
+                        <message>test</message>
+                        <suspect>[DOWJONES 1112727]</suspect>
+                        <spc_reason>DOWJONES</spc_reason>
+                        <full_suspect>[DOWJONES 1112727] IVAN IVANOV</full_suspect>
+                    </Row>
+                    <Row num="6">
+                        <item>TEST</item>
+                        <value>Иванов иван иванович</value>
+                        <message>test</message>
+                        <suspect>[DOWJONES 1369503]</suspect>
+                        <spc_reason>DOWJONES</spc_reason>
+                        <full_suspect>[DOWJONES 1369503] IVAN IVANOV</full_suspect>
+                    </Row>
+                    <Row num="7">
+                        <item>TEST</item>
+                        <value>Иванов иван иванович</value>
+                        <message>test</message>
+                        <suspect>[DOWJONES 3113752]</suspect>
+                        <spc_reason>DOWJONES</spc_reason>
+                        <full_suspect>[DOWJONES 3113752] IVAN IVANOV</full_suspect>
+                    </Row>
+                </Description>
+            </Response>
+        </Response>
+    </Msg>
+</FISRs>
