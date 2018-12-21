@@ -1,6 +1,7 @@
 package com.example.sendform;
 
 import com.example.sendform.configuration.BepaidConfiguration;
+import com.example.sendform.entity.User;
 import com.example.sendform.model.LiqPayPaymentResponse;
 import com.example.sendform.service.SendRequestMessage;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -10,7 +11,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.RestTemplate;
+
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
@@ -26,6 +30,8 @@ public class SendformApplicationTests {
 	private BepaidConfiguration bepaidConfiguration;
 
 	private ObjectMapper objectMapper = new ObjectMapper();
+
+	private RestTemplate restTemplate = new RestTemplate();
 
 	@Test
 	public void contextLoads() {
@@ -54,4 +60,14 @@ public class SendformApplicationTests {
 		String result = StringUtils.substringBefore(forReplace, ";");
 		System.out.println(result);
 	}
+
+	@Test
+	public void test() {
+		String url = "http://localhost:8080/user";
+		ResponseEntity<User> forEntity = restTemplate.getForEntity(url, User.class);
+		System.out.println(forEntity.getBody());
+		System.out.println(forEntity.getBody().getSureName());
+	}
+
+
 }

@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AmlCheckData {
+public class AmlCheckResult {
 
     private List<String> fullNameData = new ArrayList<>();
     private List<String> addressData = new ArrayList<>();

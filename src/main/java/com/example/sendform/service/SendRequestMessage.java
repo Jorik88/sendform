@@ -130,6 +130,53 @@ public class SendRequestMessage {
 ////        return response.toString();
 //    }
 
+
+    //    private List<String> sendHtmlFormForConfirmEnrolment(String transactionId) {
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(APPLICATION_FORM_URLENCODED);
+//        HttpEntity<String> httpEntity = new HttpEntity<>("transactionId=" + transactionId, headers);
+//        HttpEntity<String> response = restTemplate.exchange(CONFIRM_ENROLMENT_PROCESS_URL, HttpMethod.POST, httpEntity, String.class);
+//        HttpHeaders responseHeaders = response.getHeaders();
+//        List<String> cookies = responseHeaders.get(HttpHeaders.SET_COOKIE);
+//        if (cookies == null || cookies.isEmpty()) {
+//            log.warn("Cookies not found in response");
+//            throw new BepaidException("Cookies not found in response");
+//        }
+//        return cookies;
+//    }
+//
+//    private void sendHtmlFormWithCookies(List<String> cookiesList, String transactionId) throws InterruptedException {
+//        String url = CONFIRM_ENROLMENT_STATUS_URL + "?transactionId=" + transactionId;
+//        HttpHeaders headers = new HttpHeaders();
+//        cookiesList.forEach(cookie -> headers.add(HttpHeaders.COOKIE, StringUtils.substringBefore(cookie, ";")));
+//        HttpEntity httpEntity = new HttpEntity<>(null, headers);
+//        ResponseEntity<String> response;
+//        int attemptCount = 0;
+//            while (true) {
+//                attemptCount++;
+//                response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+//                if(response.getStatusCode().equals(HttpStatus.SEE_OTHER)){
+//                    break;
+//                }else if (attemptCount > bepaidConfiguration.getRequestAttemptCount()){
+//                    log.warn("Attempt count limit, count is={}", attemptCount);
+//                    throw new BepaidException("Attempt count limit, count is " + attemptCount);
+//                }else {
+//                    Thread.sleep(2000);
+//                }
+//            }
+//            HttpHeaders responseHeaders = response.getHeaders();
+//            List<String> location = responseHeaders.get("Location");
+//            if (location == null || location.isEmpty()) {
+//                log.warn("Header Location not found or not contain data");
+//                throw new BepaidException("Header Location not found or not contain data");
+//            }
+//        boolean status = Boolean.valueOf(StringUtils.substringAfterLast(location.get(0), "="));
+//        if (!status) {
+//            log.warn("Enrolment operation is failed");
+//            throw new BepaidException("Enrolment operation is failed");
+//        }
+//    }
+
     public void stackExchange() {
         String url = "https://api.stackexchange.com/docs/sites#page=1&pagesize=8&filter=default&run=true";
         HttpEntity<String> exchange = restTemplate.exchange(url, HttpMethod.GET, null, String.class);

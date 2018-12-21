@@ -1,16 +1,12 @@
 package com.example.sendform.service;
 
-import com.example.sendform.model.AmlCheckData;
+import com.example.sendform.model.AmlCheckResult;
 import com.sun.org.apache.xml.internal.serialize.OutputFormat;
 import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.w3c.dom.Document;
@@ -39,46 +35,51 @@ public class RefactorXmlFileService {
     private static final String URL = "http://localhost:9000/itwGateWS/exec/FISPut";
 
 
-    public void refactor() throws ParserConfigurationException, IOException, SAXException, TransformerException {
-        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-        Document doc = docBuilder.parse("src/main/resources/templates/aml.xml");
-
-        Node item = doc.getElementsByTagName("parameters").item(0);
-        Element element = (Element) item;
-
-        setContent(doc, element);
-        doc.setXmlStandalone(true);
-
-        OutputFormat format    = new OutputFormat(doc);
-        format.setEncoding("windows-1251");
-        // as a String
-        StringWriter stringOut = new StringWriter();
-        XMLSerializer serial   = new XMLSerializer(stringOut, format);
-        serial.serialize(doc);
-        // Display the XML
-        System.out.println(stringOut.toString());
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.TEXT_XML);
-        HttpEntity<String> httpEntity = new HttpEntity<>(stringOut.toString(), headers);
-        HttpEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, httpEntity, String.class);
-
-        writeXml(doc);
-
-        System.out.println(response);
-        System.out.println("Done");
-    }
+//    public void refactor() throws ParserConfigurationException, IOException, SAXException, TransformerException {
+//        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+//        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+//        Document doc = docBuilder.parse("src/main/resources/templates/aml.xml");
+//
+//        Node item = doc.getElementsByTagName("parameters").item(0);
+//        Element element = (Element) item;
+//
+//        setContent(doc, element);
+//        doc.setXmlStandalone(true);
+//
+//        OutputFormat format    = new OutputFormat(doc);
+//        format.setEncoding("windows-1251");
+//        // as a String
+//        StringWriter stringOut = new StringWriter();
+//        XMLSerializer serial   = new XMLSerializer(stringOut, format);
+//        serial.serialize(doc);
+//        // Display the XML
+//        System.out.println(stringOut.toString());
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.TEXT_XML);
+//        HttpEntity<String> httpEntity = new HttpEntity<>(stringOut.toString(), headers);
+//        HttpEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, httpEntity, String.class);
+//
+//        writeXml(doc);
+//
+//        System.out.println(response);
+//        System.out.println("Done");
+//    }
 
     private void setContent(Document doc, Element element) {
-        Element pTest = doc.createElement("p");
-        pTest.setAttribute("name", "people_full_name");
-        pTest.appendChild(doc.createTextNode("Иванов иван"));
-        element.appendChild(pTest);
+        Element pName = doc.createElement("p");
+        pName.setAttribute("name", "people_full_name");
+        pName.appendChild(doc.createTextNode("Иванов иван"));
+        element.appendChild(pName);
 
-        Element pMessage = doc.createElement("p");
-        pMessage.setAttribute("name", "person_address");
-        pMessage.appendChild(doc.createTextNode("UNITED STATES, PATERSON, RAILWAY AVENUE, 345 E"));
-        element.appendChild(pMessage);
+//        Element pPassportData = doc.createElement("p");
+//        pPassportData.setAttribute("name", "people_document");
+//        pPassportData.appendChild(doc.createTextNode(null));
+//        element.appendChild(pPassportData);
+
+        Element pAddress = doc.createElement("p");
+        pAddress.setAttribute("name", "person_address");
+        pAddress.appendChild(doc.createTextNode("UNITED STATES, PATERSON, RAILWAY AVENUE, 345 E"));
+        element.appendChild(pAddress);
     }
 
     private void writeXml(Document doc) throws TransformerException {
@@ -113,7 +114,7 @@ public class RefactorXmlFileService {
         okhttp3.MediaType mediaType = okhttp3.MediaType.parse("text/xml");
         RequestBody body = RequestBody.create(mediaType, stringOut.toString());
         Request request = new Request.Builder()
-                .url("http://localhost:9000/itwGateWS/exec/FISPut")
+                .url("http://localhost:9001/itwGateWS/exec/FISPut")
                 .post(body)
                 .addHeader("content-type", "text/xml")
                 .build();
@@ -133,7 +134,7 @@ public class RefactorXmlFileService {
         NodeList childNodes = doc.getElementsByTagName("Description").item(0).getChildNodes();
         NodeList nodes = ((Node) childNodes).getChildNodes();
 
-        AmlCheckData amlCheckData = new AmlCheckData();
+        AmlCheckResult amlCheckData = new AmlCheckResult();
         int bound = nodes.getLength();
         for (int i = 0; i < bound; i++) {
             if ("PEOPLE_FULL_NAME".equals(nodes.item(i).getFirstChild().getTextContent())) {

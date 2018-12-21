@@ -25,4 +25,13 @@ public class TestAmlRequest {
 //        service.refactor();
         service.m1();
     }
+
+    @Test
+    public void replace() {
+        String str = "jhjhjundefinedfewww";
+        if (str.contains("undefined")) {
+            str = str.replace("undefined", "");
+        }
+        System.out.println(str);
+    }
 }
