@@ -1,0 +1,27 @@
+<operation>
+    <lastName>РОЛЬФ-ЛОДЖИСТИК ОП В Г.ЛОБНЯ ООО</lastName>
+    <firstName/>
+    <middleName/>
+    <INN>7715297553</INN>
+    <region>Московская область</region>
+    <area>ЛОБНЕНСКИЙ</area>
+    <place>ЛОБНЯ</place>
+    <street>ГОРКИ КИОВСКИЕ (описание заменено на «Номер СТС»)ПРОМЗОНА)</street>
+    <house>ВЛД.5</house>
+    <departmentCode>462</departmentCode>
+    <registrationPlate>М810КМ50</registrationPlate>
+    <brandAndModel>МЕРСЕДЕС-БЕНЦ 1836 LS АХОR</brandAndModel>
+    <vehicleCategory>С</vehicleCategory>
+    <vin>WDВ9440321L797584</vin>
+    <OGRN>1027739069192</OGRN>
+    <maxAllowedWeight>18000</maxAllowedWeight>
+    <weightWithoutLoad>7700</weightWithoutLoad>
+    <color>БЕЛЫЙ</color>
+    <registrationDocument>5012618842</registrationDocument>
+    <registrationDate>2013-10-23T00:00:00.000Z</registrationDate>
+    <personType>1</personType>
+    <productionYear>2013</productionYear>
+    <powerHp>360.00</powerHp>
+    <powerKwt>265.00</powerKwt>
+    <engineVolume>11967</engineVolume>
+</operation>
