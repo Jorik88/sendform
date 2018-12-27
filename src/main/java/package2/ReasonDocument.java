@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.Objects;
 
 
 /**
@@ -173,5 +174,4 @@ public class ReasonDocument {
     public void setSeries(String value) {
         this.series = value;
     }
-
 }

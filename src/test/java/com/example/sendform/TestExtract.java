@@ -21,8 +21,14 @@ public class TestExtract {
 
     @Test
     public void test260() throws IOException {
-        String content = new String(Files.readAllBytes(Paths.get("for_xsd-260.xml")));
+        String content = new String(Files.readAllBytes(Paths.get("src/test/resources/for_xsd-260.xml")));
         PreferentialCategoriesFullResponseType unmarshal = JAXB.unmarshal(new StringReader(content), PreferentialCategoriesFullResponseType.class);
         System.out.println(unmarshal);
+
+        String fcontent = new String(Files.readAllBytes(Paths.get("src/test/resources/260-f.xml")));
+        PreferentialCategoriesFullResponseType fullResponseType = JAXB.unmarshal(new StringReader(fcontent), PreferentialCategoriesFullResponseType.class);
+        System.out.println(fullResponseType);
+
+        System.out.println(unmarshal.equals(fullResponseType));
     }
 }

@@ -3,6 +3,7 @@ package package2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -66,4 +67,16 @@ public class ArrayCategoriesType {
         return this.detailsSearchResidentPreferentialCategories;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ArrayCategoriesType that = (ArrayCategoriesType) o;
+        return Objects.equals(detailsSearchResidentPreferentialCategories, that.detailsSearchResidentPreferentialCategories);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(detailsSearchResidentPreferentialCategories);
+    }
 }

@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import org.w3c.dom.Element;
 
+import java.util.Objects;
+
 
 /**
  * <p>Java class for PreferentialCategoriesFullResponseType complex type.
@@ -174,4 +176,16 @@ public class PreferentialCategoriesFullResponseType {
 
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PreferentialCategoriesFullResponseType that = (PreferentialCategoriesFullResponseType) o;
+        return Objects.equals(result, that.result);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(result);
+    }
 }

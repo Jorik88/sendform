@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.Objects;
 
 
 /**
@@ -223,4 +224,16 @@ public class ResidentPreferentialCategoriesType {
         this.startDateReasons = value;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ResidentPreferentialCategoriesType that = (ResidentPreferentialCategoriesType) o;
+        return Objects.equals(snils, that.snils);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(snils);
+    }
 }
