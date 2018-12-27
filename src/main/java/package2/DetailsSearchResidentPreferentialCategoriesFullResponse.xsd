@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dszn="http://asur/dszn/" xmlns:q1="uri:citsp-br-social-support" targetNamespace="http://asur/dszn/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:import namespace="uri:citsp-br-social-support" schemaLocation="ReasonDocument.xsd"/>
+    <xs:element name="DetailsSearchResidentPreferentialCategoriesFullResponse" type="dszn:PreferentialCategoriesFullResponseType" nillable="true"/>
+    <xs:complexType name="PreferentialCategoriesFullResponseType">
+        <xs:sequence>
+            <xs:element name="Result" type="dszn:ArrayCategoriesType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="DocumentReady" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="InputData" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:any processContents="skip"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ArrayCategoriesType">
+        <xs:sequence>
+            <xs:element name="DetailsSearchResidentPreferentialCategories" type="dszn:ResidentPreferentialCategoriesType" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ResidentPreferentialCategoriesType">
+        <xs:sequence>
+            <xs:element name="EndDate" type="xs:dateTime" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="EndDateReasons" type="dszn:ArrayOfReasonDocumentType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="Snils" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="NamePreferentialCategory" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="PreferentialCategoryId" type="xs:int" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="StartDate" type="xs:dateTime" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="StartDateReasons" type="dszn:ArrayOfReasonDocumentType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ArrayOfReasonDocumentType">
+        <xs:sequence>
+            <xs:element name="ReasonDocument" type="q1:ReasonDocument" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

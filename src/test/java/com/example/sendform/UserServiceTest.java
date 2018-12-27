@@ -10,6 +10,7 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.bind.*;
@@ -20,11 +21,14 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.stream.StreamSource;
+import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 public class UserServiceTest {
 
@@ -193,5 +197,63 @@ public class UserServiceTest {
         Operation st = jst.getValue();
 
         System.out.println(st);
+    }
+
+    @Test
+    public void testDom1() throws JAXBException, ParserConfigurationException, IOException, SAXException {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder = dbf.newDocumentBuilder();
+        Document document = docBuilder.parse("test7760.xml");
+
+        // get xml node from the document
+        Node xmlNode = document.getElementsByTagName("Code_SP").item(0);
+
+
+        System.out.println(xmlNode.getTextContent());
+    }
+
+
+    @Test
+    public void testGetAllNodes() {
+        List<String> extensionList = getExtensionList("test7760.xml");
+        System.out.print(extensionList);
+    }
+
+
+    private static List<String> getExtensionList(String fileName) {
+        List<String> results = new ArrayList<>();
+        try {
+            File file = new File(fileName);
+
+            DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance()
+                    .newDocumentBuilder();
+
+            Document doc = dBuilder.parse(file);
+
+            if (doc.hasChildNodes()) {
+
+                results.addAll(getExtensionList(doc.getChildNodes()));
+
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return results;
+    }
+
+    private static List<String> getExtensionList(NodeList nodeList) {
+        List<String> results = new ArrayList<>();
+        for (int count = 0; count < nodeList.getLength(); count++) {
+
+            Node tempNode = nodeList.item(count);
+            String value = tempNode.getNodeValue();
+            if (tempNode.getNodeType() == Node.TEXT_NODE && value != null && !value.trim().isEmpty()) {
+                results.add(value.trim());
+            }
+            results.addAll(getExtensionList(tempNode.getChildNodes()));
+        }
+
+        return results;
     }
 }
