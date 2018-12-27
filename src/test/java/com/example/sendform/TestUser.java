@@ -11,10 +11,10 @@ public class TestUser {
 
     @Test
     public void test() {
-        List<User> list = Arrays.asList(new User("vova", "vovf@com", "petrov"), new User("jora", "jora@", "sidorov"));
+        List<User> list = Arrays.asList(new User("vova", "vovf@compareXml", "petrov"), new User("jora", "jora@", "sidorov"));
 
 //        List<User> list1 = Arrays.asList(new User("jora", "jora@", "sidorov"));
-        List<User> list1 = Collections.singletonList(new User("vova", "w@com", "petrov"));
+        List<User> list1 = Collections.singletonList(new User("vova", "w@compareXml", "petrov"));
 
         System.out.println(list.equals(list1));
 

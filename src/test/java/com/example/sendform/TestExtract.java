@@ -1,8 +1,8 @@
 package com.example.sendform;
 
 import org.junit.Test;
-import package1.Extract;
-import package2.PreferentialCategoriesFullResponseType;
+import com.example.sendform.resp7760.Extract;
+import com.example.sendform.resp260.PreferentialCategoriesFullResponseType;
 
 import javax.xml.bind.JAXB;
 import java.io.IOException;

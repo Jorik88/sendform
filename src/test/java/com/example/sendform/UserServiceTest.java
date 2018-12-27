@@ -48,7 +48,7 @@ public class UserServiceTest {
                 "<lastName>Ivanov</lastName>\n" +
                 "<last>fdgfddf</last>\n" +
                 "<year>44</year>\n" +
-                "<email>ivanov@gmail.com</email>\n" +
+                "<email>ivanov@gmail.compareXml</email>\n" +
                 "</user>\n" +
                 "</ueweser>";
         User unmarshal = JAXB.unmarshal(new StringReader(s), User.class);
@@ -59,7 +59,7 @@ public class UserServiceTest {
                 "                \"<last>fdgfddf</last>\\n\" +\n" +
                 "                \"<lewrewast>fdgfddf</lewrewast>\\n\" +\n" +
                 "                \"<year>32</year>\\n\" +\n" +
-                "                \"<email>ivanov@gmail1.com</email>\\n\" +\n" +
+                "                \"<email>ivanov@gmail1.compareXml</email>\\n\" +\n" +
                 "                \"</user>";
         User user = JAXB.unmarshal(new StringReader(d), User.class);
         System.out.println(user);
@@ -179,7 +179,7 @@ public class UserServiceTest {
     public void testDom() throws JAXBException, ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = dbf.newDocumentBuilder();
-        Document document = docBuilder.parse("test1.xml");
+        Document document = docBuilder.parse("resp-10615!.xml");
 
         // create JAXBContext which will be used to create a Binder
         JAXBContext jc = JAXBContext.newInstance(Operation.class);
@@ -187,16 +187,18 @@ public class UserServiceTest {
         // create binder
         Binder<Node> binder = jc.createBinder();
 
-        // get xml node from the document
-        Node xmlNode = document.getElementsByTagName("operation").item(0);
+//        // get xml node from the document
+//        Node xmlNode = document.getElementsByTagName("operation").item(0);
+//
+//        // unmarshal the xml
+//        JAXBElement<Operation> jst = binder.unmarshal(xmlNode, Operation.class);
+//
+//        // get student object
+//        Operation st = jst.getValue();
+//
+//        System.out.println(st);
 
-        // unmarshal the xml
-        JAXBElement<Operation> jst = binder.unmarshal(xmlNode, Operation.class);
-
-        // get student object
-        Operation st = jst.getValue();
-
-        System.out.println(st);
+        System.out.println(document.getElementsByTagName("operation"));
     }
 
     @Test
