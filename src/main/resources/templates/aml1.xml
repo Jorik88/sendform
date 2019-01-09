@@ -1,11 +1,19 @@
-<?xml version="1.0" encoding="windows-1251"?><FISRq>
+<?xml version="1.0" encoding="windows-1251"?>
+<FISRq>
     <Msg Scheme="CRB" Version="1.0">
         <Request RqId="CRB/FindSuspiciousRq">
             <Body>
                 <req-ROWSET>
                     <req-ROW>
                         <parameters>
-                        <p name="test">РРІР°РЅРѕРІ РёРІР°РЅ РёРІР°РЅРѕРІРёС‡</p><p name="message">test</p></parameters>
+                            <p name="people_full_name" type="N">Иванов иван</p>
+                        </parameters>
+                        <parameters>
+                            <p name="people_document" type="P">KM5435534</p>
+                        </parameters>
+                        <parameters>
+                            <p name="person_address" type="A">UNITED STATES, PATERSON, RAILWAY AVENUE, 345 E</p>
+                        </parameters>
                     </req-ROW>
                 </req-ROWSET>
             </Body>

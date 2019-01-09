@@ -35,51 +35,50 @@ public class RefactorXmlFileService {
     private static final String URL = "http://localhost:9000/itwGateWS/exec/FISPut";
 
 
-//    public void refactor() throws ParserConfigurationException, IOException, SAXException, TransformerException {
-//        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-//        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-//        Document doc = docBuilder.parse("src/main/resources/templates/aml.xml");
-//
-//        Node item = doc.getElementsByTagName("parameters").item(0);
-//        Element element = (Element) item;
-//
-//        setContent(doc, element);
-//        doc.setXmlStandalone(true);
-//
-//        OutputFormat format    = new OutputFormat(doc);
-//        format.setEncoding("windows-1251");
-//        // as a String
-//        StringWriter stringOut = new StringWriter();
-//        XMLSerializer serial   = new XMLSerializer(stringOut, format);
-//        serial.serialize(doc);
-//        // Display the XML
-//        System.out.println(stringOut.toString());
+    public void refactor() throws ParserConfigurationException, IOException, SAXException, TransformerException {
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+        Document doc = docBuilder.parse("src/main/resources/templates/aml.xml");
+
+        Node item = doc.getElementsByTagName("req-ROW").item(0);
+        Element element = (Element) item;
+
+        setContent(doc, element);
+        doc.setXmlStandalone(true);
+
+        OutputFormat format    = new OutputFormat(doc);
+        format.setEncoding("windows-1251");
+        // as a String
+        StringWriter stringOut = new StringWriter();
+        XMLSerializer serial   = new XMLSerializer(stringOut, format);
+        serial.serialize(doc);
+        // Display the XML
+        System.out.println(stringOut.toString());
 //        HttpHeaders headers = new HttpHeaders();
 //        headers.setContentType(MediaType.TEXT_XML);
 //        HttpEntity<String> httpEntity = new HttpEntity<>(stringOut.toString(), headers);
 //        HttpEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, httpEntity, String.class);
 //
-//        writeXml(doc);
+        writeXml(doc);
 //
 //        System.out.println(response);
-//        System.out.println("Done");
-//    }
+        System.out.println("Done");
+    }
 
     private void setContent(Document doc, Element element) {
+        someMethod(doc, element, "people_full_name", "N", "Иванов иван");
+
+        someMethod(doc, element, "person_address", "A", "UNITED STATES, PATERSON, RAILWAY AVENUE, 345 E");
+    }
+
+    private void someMethod(Document doc, Element element, String attributeName, String attributeType, String content) {
+        Element parameters = doc.createElement("parameters");
         Element pName = doc.createElement("p");
-        pName.setAttribute("name", "people_full_name");
-        pName.appendChild(doc.createTextNode("Иванов иван"));
-        element.appendChild(pName);
-
-//        Element pPassportData = doc.createElement("p");
-//        pPassportData.setAttribute("name", "people_document");
-//        pPassportData.appendChild(doc.createTextNode(null));
-//        element.appendChild(pPassportData);
-
-        Element pAddress = doc.createElement("p");
-        pAddress.setAttribute("name", "person_address");
-        pAddress.appendChild(doc.createTextNode("UNITED STATES, PATERSON, RAILWAY AVENUE, 345 E"));
-        element.appendChild(pAddress);
+        pName.setAttribute("name", attributeName);
+        pName.setAttribute("type", attributeType);
+        pName.appendChild(doc.createTextNode(content));
+        parameters.appendChild(pName);
+        element.appendChild(parameters);
     }
 
     private void writeXml(Document doc) throws TransformerException {
@@ -97,7 +96,7 @@ public class RefactorXmlFileService {
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
         Document doc = docBuilder.parse("src/main/resources/templates/aml.xml");
 
-        Node item = doc.getElementsByTagName("parameters").item(0);
+        Node item = doc.getElementsByTagName("req-ROW").item(0);
         Element element = (Element) item;
 
         setContent(doc, element);
